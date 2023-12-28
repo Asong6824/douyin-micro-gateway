@@ -5,7 +5,7 @@ package message
 import (
 	"context"
 
-	message "gateway/biz/model/social/message"
+	message "github.com/Asong6824/douyin-micro-gateway/biz/model/social/message"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 )

@@ -3,13 +3,13 @@
 package router
 
 import (
-	comment "gateway/biz/router/comment"
-	favorite "gateway/biz/router/favorite"
-	feed "gateway/biz/router/feed"
-	message "gateway/biz/router/message"
-	publish "gateway/biz/router/publish"
-	relation "gateway/biz/router/relation"
-	user "gateway/biz/router/user"
+	comment "github.com/Asong6824/douyin-micro-gateway/biz/router/comment"
+	favorite "github.com/Asong6824/douyin-micro-gateway/biz/router/favorite"
+	feed "github.com/Asong6824/douyin-micro-gateway/biz/router/feed"
+	message "github.com/Asong6824/douyin-micro-gateway/biz/router/message"
+	publish "github.com/Asong6824/douyin-micro-gateway/biz/router/publish"
+	relation "github.com/Asong6824/douyin-micro-gateway/biz/router/relation"
+	user "github.com/Asong6824/douyin-micro-gateway/biz/router/user"
 	"github.com/cloudwego/hertz/pkg/app/server"
 )
 

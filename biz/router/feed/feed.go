@@ -3,7 +3,7 @@
 package feed
 
 import (
-	feed "gateway/biz/handler/feed"
+	feed "github.com/Asong6824/douyin-micro-gateway/biz/handler/feed"
 	"github.com/cloudwego/hertz/pkg/app/server"
 )
 

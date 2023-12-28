@@ -5,7 +5,7 @@ package comment
 import (
 	"context"
 
-	comment "gateway/biz/model/interact/comment"
+	comment "github.com/Asong6824/douyin-micro-gateway/biz/model/interact/comment"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 )

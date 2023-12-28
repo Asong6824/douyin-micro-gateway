@@ -3,7 +3,7 @@
 package message
 
 import (
-	message "gateway/biz/handler/message"
+	message "github.com/Asong6824/douyin-micro-gateway/biz/handler/message"
 	"github.com/cloudwego/hertz/pkg/app/server"
 )
 

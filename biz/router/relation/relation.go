@@ -3,7 +3,7 @@
 package relation
 
 import (
-	relation "gateway/biz/handler/relation"
+	relation "github.com/Asong6824/douyin-micro-gateway/biz/handler/relation"
 	"github.com/cloudwego/hertz/pkg/app/server"
 )
 

@@ -3,7 +3,7 @@
 package main
 
 import (
-	router "gateway/biz/router"
+	router "github.com/Asong6824/douyin-micro-gateway/biz/router"
 	"github.com/cloudwego/hertz/pkg/app/server"
 )
 

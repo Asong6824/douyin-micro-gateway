@@ -7,8 +7,8 @@
 package favorite
 
 import (
-	_ "gateway/biz/model/api"
-	common "gateway/biz/model/common"
+	_ "github.com/Asong6824/douyin-micro-gateway/biz/model/api"
+	common "github.com/Asong6824/douyin-micro-gateway/biz/model/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"

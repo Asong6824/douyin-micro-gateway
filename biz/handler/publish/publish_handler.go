@@ -5,7 +5,7 @@ package publish
 import (
 	"context"
 
-	publish "gateway/biz/model/basic/publish"
+	publish "github.com/Asong6824/douyin-micro-gateway/biz/model/basic/publish"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 )

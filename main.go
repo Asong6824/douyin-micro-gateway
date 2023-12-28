@@ -4,14 +4,99 @@ package main
 
 import (
 	"github.com/cloudwego/hertz/pkg/app/server"
+	"github.com/Asong6824/douyin-micro-gateway/pkg/setting"
+	"github.com/Asong6824/douyin-micro-gateway/global"
+	"github.com/cloudwego/hertz/pkg/common/hlog"
+	"github.com/hertz-contrib/registry/nacos"
+	"github.com/cloudwego/hertz/pkg/app/server/registry"
+	"github.com/cloudwego/hertz/pkg/common/utils"
+	//"github.com/cloudwego/hertz/pkg/protocol/consts"
+	"github.com/nacos-group/nacos-sdk-go/clients"
+	"github.com/nacos-group/nacos-sdk-go/common/constant"
+	"github.com/nacos-group/nacos-sdk-go/vo"
+	//"github.com/Asong6824/douyin-micro-gateway/biz/rpc"
+
+	"io"
+	"os"
 )
 
-func main() {
-	h := server.Default(
-		server.WithStreamBody(true),
-		server.WithHostPorts("0.0.0.0:8000"),
-	)
+func Init() {
+	err := setupSetting()
+	if err != nil {
+		panic(err)
+	}
+	err = setupLogger()
+	if err != nil {
+		panic(err)
+	}
+}
 
+func main() {
+	Init()
+	sc := []constant.ServerConfig{
+		*constant.NewServerConfig("172.17.0.2", 8848),
+	}
+	
+	cc := constant.ClientConfig{
+		NamespaceId:         "public",
+		TimeoutMs:           5000,
+		NotLoadCacheAtStart: true,
+		LogDir:              "/tmp/nacos/log",
+		CacheDir:            "/tmp/nacos/cache",
+		LogLevel:            "info",
+	}
+	
+	cli, err := clients.NewNamingClient(
+		vo.NacosClientParam{
+			ClientConfig:  &cc,
+			ServerConfigs: sc,
+		},
+	)
+	if err != nil {
+		panic(err)
+	}
+	r := nacos.NewNacosRegistry(cli)
+	h := server.Default(
+		server.WithStreamBody(global.EngineSetting.WithStreamBody),
+		server.WithHostPorts(global.EngineSetting.WithHostPorts),
+		server.WithRegistry(r, &registry.Info{
+			ServiceName: global.EngineSetting.Registry.ServiceName,
+			Addr:        utils.NewNetAddr("tcp", global.EngineSetting.Registry.Addr),
+			Weight:      global.EngineSetting.Registry.Weight,
+			Tags:        global.EngineSetting.Registry.Tags,
+		}),
+	)
 	register(h)
 	h.Spin()
+}
+
+func setupSetting() error {
+	setting, err := setting.NewSetting()
+	if err != nil {
+		return err
+	}
+	err = setting.ReadSection("Engine", &global.EngineSetting)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func setupLogger() error {
+	f, err := os.OpenFile("./output.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+    if err != nil {
+        return err
+    }
+    fileWriter := io.MultiWriter(f,os.Stdout)
+    hlog.SetOutput(fileWriter)
+	return nil
+}
+
+func setupEtcd() error {
+	var err error
+	
+    if err != nil {
+        return err
+    }
+	return nil
 }

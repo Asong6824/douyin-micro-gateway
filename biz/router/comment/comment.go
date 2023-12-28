@@ -3,7 +3,7 @@
 package comment
 
 import (
-	comment "gateway/biz/handler/comment"
+	comment "github.com/Asong6824/douyin-micro-gateway/biz/handler/comment"
 	"github.com/cloudwego/hertz/pkg/app/server"
 )
 

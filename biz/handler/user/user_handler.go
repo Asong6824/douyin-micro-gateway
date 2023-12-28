@@ -5,7 +5,7 @@ package user
 import (
 	"context"
 
-	user "gateway/biz/model/basic/user"
+	user "github.com/Asong6824/douyin-micro-gateway/biz/model/basic/user"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 )

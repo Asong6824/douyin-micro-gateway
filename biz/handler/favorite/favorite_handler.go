@@ -5,7 +5,7 @@ package favorite
 import (
 	"context"
 
-	favorite "gateway/biz/model/interact/favorite"
+	favorite "github.com/Asong6824/douyin-micro-gateway/biz/model/interact/favorite"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 )

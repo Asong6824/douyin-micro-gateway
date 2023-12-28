@@ -5,7 +5,7 @@ package feed
 import (
 	"context"
 
-	feed "gateway/biz/model/basic/feed"
+	feed "github.com/Asong6824/douyin-micro-gateway/biz/model/basic/feed"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 )

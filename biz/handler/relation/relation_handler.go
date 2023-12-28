@@ -5,7 +5,7 @@ package relation
 import (
 	"context"
 
-	relation "gateway/biz/model/social/relation"
+	relation "github.com/Asong6824/douyin-micro-gateway/biz/model/social/relation"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 )

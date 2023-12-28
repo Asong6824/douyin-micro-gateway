@@ -3,7 +3,7 @@
 package publish
 
 import (
-	publish "gateway/biz/handler/publish"
+	publish "github.com/Asong6824/douyin-micro-gateway/biz/handler/publish"
 	"github.com/cloudwego/hertz/pkg/app/server"
 )
 

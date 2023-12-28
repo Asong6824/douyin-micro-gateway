@@ -3,7 +3,7 @@
 package favorite
 
 import (
-	favorite "gateway/biz/handler/favorite"
+	favorite "github.com/Asong6824/douyin-micro-gateway/biz/handler/favorite"
 	"github.com/cloudwego/hertz/pkg/app/server"
 )
 
