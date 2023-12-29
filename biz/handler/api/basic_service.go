@@ -8,6 +8,8 @@ import (
 	api "github.com/Asong6824/douyin-micro-gateway/biz/model/api"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
+	"github.com/Asong6824/douyin-micro-gateway/biz/rpc"
+	"github.com/Asong6824/douyin-micro-gateway/kitex_gen/user"
 )
 
 // Feed .
@@ -36,8 +38,13 @@ func UserRegister(ctx context.Context, c *app.RequestContext) {
 		c.String(consts.StatusBadRequest, err.Error())
 		return
 	}
-
-	resp := new(api.UserRegisterResponse)
+	resp, err := rpc.Register(ctx, &user.RegisterRequest{
+		Username: req.Username,
+		Password: req.Password,
+	})
+	if err != nil {
+		c.JSON(consts.StatusInternalServerError, resp)
+	}
 
 	c.JSON(consts.StatusOK, resp)
 }

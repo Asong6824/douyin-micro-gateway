@@ -6,6 +6,7 @@ import (
 	"github.com/Asong6824/douyin-micro-gateway/global"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"github.com/hertz-contrib/registry/nacos"
+	"github.com/kitex-contrib/registry-nacos/resolver"
 	"github.com/cloudwego/hertz/pkg/app/server/registry"
 	"github.com/cloudwego/hertz/pkg/common/utils"
 	//"github.com/cloudwego/hertz/pkg/protocol/consts"
@@ -13,6 +14,7 @@ import (
 	"github.com/nacos-group/nacos-sdk-go/common/constant"
 	"github.com/nacos-group/nacos-sdk-go/vo"
 	//"github.com/Asong6824/douyin-micro-gateway/biz/rpc"
+	"github.com/Asong6824/douyin-micro-gateway/biz/rpc"
 
 	"io"
 	"os"
@@ -27,37 +29,22 @@ func Init() {
 	if err != nil {
 		panic(err)
 	}
+	err = setupNacos()
+	if err != nil {
+		panic(err)
+	}
+	err = setupRpcClient()
+	if err != nil {
+		panic(err)
+	}
 }
 
 func main() {
 	Init()
-	sc := []constant.ServerConfig{
-		*constant.NewServerConfig("172.17.0.2", 8848),
-	}
-	
-	cc := constant.ClientConfig{
-		NamespaceId:         "public",
-		TimeoutMs:           5000,
-		NotLoadCacheAtStart: true,
-		LogDir:              "/tmp/nacos/log",
-		CacheDir:            "/tmp/nacos/cache",
-		LogLevel:            "info",
-	}
-	
-	cli, err := clients.NewNamingClient(
-		vo.NacosClientParam{
-			ClientConfig:  &cc,
-			ServerConfigs: sc,
-		},
-	)
-	if err != nil {
-		panic(err)
-	}
-	r := nacos.NewNacosRegistry(cli)
 	h := server.Default(
 		server.WithStreamBody(global.EngineSetting.WithStreamBody),
 		server.WithHostPorts(global.EngineSetting.WithHostPorts),
-		server.WithRegistry(r, &registry.Info{
+		server.WithRegistry(global.Registry, &registry.Info{
 			ServiceName: global.EngineSetting.Registry.ServiceName,
 			Addr:        utils.NewNetAddr("tcp", global.EngineSetting.Registry.Addr),
 			Weight:      global.EngineSetting.Registry.Weight,
@@ -90,11 +77,39 @@ func setupLogger() error {
 	return nil
 }
 
-func setupEtcd() error {
-	var err error
+func setupNacos() error {
+	sc := []constant.ServerConfig{
+		*constant.NewServerConfig("172.17.0.2", 8848),
+	}
 	
-    if err != nil {
-        return err
-    }
+	cc := constant.ClientConfig{
+		NamespaceId:         "public",
+		TimeoutMs:           5000,
+		NotLoadCacheAtStart: true,
+		LogDir:              "/tmp/nacos/log",
+		CacheDir:            "/tmp/nacos/cache",
+		LogLevel:            "info",
+	}
+	
+	cli, err := clients.NewNamingClient(
+		vo.NacosClientParam{
+			ClientConfig:  &cc,
+			ServerConfigs: sc,
+		},
+	)
+	if err != nil {
+		return err
+	}
+	global.Registry = nacos.NewNacosRegistry(cli)
+	global.Resolver = resolver.NewNacosResolver(cli)
+
+	return nil
+}
+
+func setupRpcClient() error {
+	err := rpc.SetupUserClient()
+	if err != nil {
+		return err
+	}
 	return nil
 }
