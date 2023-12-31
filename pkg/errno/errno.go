@@ -1,7 +1,8 @@
 package errno
 
 import (
-
+	"fmt"
+	"errors"
 )
 
 type ErrNo struct {

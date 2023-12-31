@@ -4,6 +4,7 @@ package api
 
 import (
 	"github.com/cloudwego/hertz/pkg/app"
+	"github.com/Asong6824/douyin-micro-gateway/pkg/middleware"
 )
 
 func rootMw() []app.HandlerFunc {
@@ -17,18 +18,19 @@ func _douyinMw() []app.HandlerFunc {
 }
 
 func _commentMw() []app.HandlerFunc {
-	// your code...
-	return nil
+	return []app.HandlerFunc{
+		middleware.AuthRequiredToken(),
+	}
 }
 
 func _actionMw() []app.HandlerFunc {
-	// your code...
 	return nil
 }
 
 func _commentactionMw() []app.HandlerFunc {
-	// your code...
-	return nil
+	return []app.HandlerFunc{
+		middleware.AuthRequiredToken(),
+	}
 }
 
 func _listMw() []app.HandlerFunc {
@@ -37,12 +39,12 @@ func _listMw() []app.HandlerFunc {
 }
 
 func _commentlistMw() []app.HandlerFunc {
-	// your code...
-	return nil
+	return []app.HandlerFunc{
+		middleware.AuthRequiredToken(),
+	}
 }
 
 func _favoriteMw() []app.HandlerFunc {
-	// your code...
 	return nil
 }
 
@@ -52,8 +54,9 @@ func _action0Mw() []app.HandlerFunc {
 }
 
 func _favoriteactionMw() []app.HandlerFunc {
-	// your code...
-	return nil
+	return []app.HandlerFunc{
+		middleware.AuthRequiredToken(),
+	}
 }
 
 func _list0Mw() []app.HandlerFunc {
@@ -62,8 +65,9 @@ func _list0Mw() []app.HandlerFunc {
 }
 
 func _favoritelistMw() []app.HandlerFunc {
-	// your code...
-	return nil
+	return []app.HandlerFunc{
+		middleware.AuthRequiredToken(),
+	}
 }
 
 func _feedMw() []app.HandlerFunc {
@@ -87,8 +91,9 @@ func _action1Mw() []app.HandlerFunc {
 }
 
 func _messageactionMw() []app.HandlerFunc {
-	// your code...
-	return nil
+	return []app.HandlerFunc{
+		middleware.AuthRequiredToken(),
+	}
 }
 
 func _chatMw() []app.HandlerFunc {
@@ -97,8 +102,9 @@ func _chatMw() []app.HandlerFunc {
 }
 
 func _messagechatMw() []app.HandlerFunc {
-	// your code...
-	return nil
+	return []app.HandlerFunc{
+		middleware.AuthRequiredToken(),
+	}
 }
 
 func _publishMw() []app.HandlerFunc {
@@ -112,8 +118,9 @@ func _action2Mw() []app.HandlerFunc {
 }
 
 func _publishactionMw() []app.HandlerFunc {
-	// your code...
-	return nil
+	return []app.HandlerFunc{
+		middleware.AuthRequiredToken(),
+	}
 }
 
 func _list1Mw() []app.HandlerFunc {
@@ -152,8 +159,9 @@ func _list2Mw() []app.HandlerFunc {
 }
 
 func _relationfollowlistMw() []app.HandlerFunc {
-	// your code...
-	return nil
+	return []app.HandlerFunc{
+		middleware.AuthRequiredToken(),
+	}
 }
 
 func _followerMw() []app.HandlerFunc {
@@ -167,8 +175,9 @@ func _list3Mw() []app.HandlerFunc {
 }
 
 func _relationfollowerlistMw() []app.HandlerFunc {
-	// your code...
-	return nil
+	return []app.HandlerFunc{
+		middleware.AuthRequiredToken(),
+	}
 }
 
 func _friendMw() []app.HandlerFunc {
@@ -182,8 +191,9 @@ func _list4Mw() []app.HandlerFunc {
 }
 
 func _relationfriendlistMw() []app.HandlerFunc {
-	// your code...
-	return nil
+	return []app.HandlerFunc{
+		middleware.AuthRequiredToken(),
+	}
 }
 
 func _userMw() []app.HandlerFunc {

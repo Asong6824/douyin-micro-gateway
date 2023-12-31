@@ -6,6 +6,7 @@ require (
 	github.com/apache/thrift v0.16.0
 	github.com/cloudwego/hertz v0.7.3
 	github.com/cloudwego/kitex v0.8.0
+	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/hertz-contrib/registry/nacos v0.0.0-20231110170354-519baf74ea6b
 	github.com/kitex-contrib/obs-opentelemetry v0.2.5
 	github.com/kitex-contrib/registry-nacos v0.1.1

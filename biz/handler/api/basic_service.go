@@ -10,6 +10,9 @@ import (
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 	"github.com/Asong6824/douyin-micro-gateway/biz/rpc"
 	"github.com/Asong6824/douyin-micro-gateway/kitex_gen/user"
+	"github.com/Asong6824/douyin-micro-gateway/pkg/errno"
+	"github.com/Asong6824/douyin-micro-gateway/pkg/utils"
+	pkgapp "github.com/Asong6824/douyin-micro-gateway/pkg/app"
 )
 
 // Feed .
@@ -33,19 +36,29 @@ func Feed(ctx context.Context, c *app.RequestContext) {
 func UserRegister(ctx context.Context, c *app.RequestContext) {
 	var err error
 	var req api.UserRegisterRequest
+	var resp api.UserRegisterResponse
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		c.String(consts.StatusBadRequest, err.Error())
+		pkgapp.SendFailResponse(c, errno.ParamErr)
 		return
 	}
-	resp, err := rpc.Register(ctx, &user.RegisterRequest{
+	rpcResp, err := rpc.Register(ctx, &user.RegisterRequest{
 		Username: req.Username,
 		Password: req.Password,
 	})
+	resp.StatusCode = rpcResp.Base.Code
+	resp.StatusMsg = &rpcResp.Base.Msg
 	if err != nil {
-		c.JSON(consts.StatusInternalServerError, resp)
+		c.JSON(consts.StatusOK, resp)
+		return
 	}
-
+	token, err := utils.CreateToken(rpcResp.UserId)
+	if err != nil {
+		pkgapp.SendFailResponse(c, errno.ParamErr)
+		return
+	}
+	resp.UserID = rpcResp.UserId
+	resp.Token = token
 	c.JSON(consts.StatusOK, resp)
 }
 
@@ -54,6 +67,7 @@ func UserRegister(ctx context.Context, c *app.RequestContext) {
 func UserLogin(ctx context.Context, c *app.RequestContext) {
 	var err error
 	var req api.UserLoginRequest
+	
 	err = c.BindAndValidate(&req)
 	if err != nil {
 		c.String(consts.StatusBadRequest, err.Error())
