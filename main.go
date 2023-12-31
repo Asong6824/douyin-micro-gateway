@@ -15,7 +15,7 @@ import (
 	"github.com/nacos-group/nacos-sdk-go/vo"
 	//"github.com/Asong6824/douyin-micro-gateway/biz/rpc"
 	"github.com/Asong6824/douyin-micro-gateway/biz/rpc"
-
+	"github.com/minio/minio-go/v6"
 	"io"
 	"os"
 )
@@ -61,6 +61,10 @@ func setupSetting() error {
 		return err
 	}
 	err = setting.ReadSection("Engine", &global.EngineSetting)
+	if err != nil {
+		return err
+	}
+	err = setting.ReadSection("Minio", &global.MinioSetting)
 	if err != nil {
 		return err
 	}
@@ -111,5 +115,14 @@ func setupRpcClient() error {
 	if err != nil {
 		return err
 	}
+	return nil
+}
+
+func setupMinioClient() error {
+	var err error
+	global.MinioClient, err = minio.New(global.MinioSetting.Endpoint, global.MinioSetting.AccessKeyID, global.MinioSetting.SecretAccessKey, global.MinioSetting.UseSSL)
+    if err != nil {
+        return err
+    }
 	return nil
 }

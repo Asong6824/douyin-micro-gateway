@@ -6,4 +6,5 @@ import (
 
 var (
 	EngineSetting *setting.EngineSetting
+	MinioSetting  *setting.MinioSetting
 )
