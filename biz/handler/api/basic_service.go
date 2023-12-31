@@ -67,15 +67,29 @@ func UserRegister(ctx context.Context, c *app.RequestContext) {
 func UserLogin(ctx context.Context, c *app.RequestContext) {
 	var err error
 	var req api.UserLoginRequest
-	
+	var resp api.UserLoginResponse
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		c.String(consts.StatusBadRequest, err.Error())
+		pkgapp.SendFailResponse(c, errno.ParamErr)
 		return
 	}
-
-	resp := new(api.UserLoginResponse)
-
+	rpcResp, err := rpc.Login(ctx, &user.LoginRequest{
+		Username: req.Username,
+		Password: req.Password,
+	})
+	resp.StatusCode = rpcResp.Base.Code
+	resp.StatusMsg = &rpcResp.Base.Msg
+	if err != nil {
+		c.JSON(consts.StatusOK, resp)
+		return
+	}
+	token, err := utils.CreateToken(rpcResp.UserId)
+	if err != nil {
+		pkgapp.SendFailResponse(c, errno.ParamErr)
+		return
+	}
+	resp.UserID = rpcResp.UserId
+	resp.Token = token
 	c.JSON(consts.StatusOK, resp)
 }
 

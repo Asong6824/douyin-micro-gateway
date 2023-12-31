@@ -37,3 +37,11 @@ func Register(ctx context.Context, req *user.RegisterRequest) (*user.RegisterRes
 	}
 	return resp, nil
 }
+
+func Login(ctx context.Context, req *user.LoginRequest) (*user.LoginResponse, error) {
+	resp, err := global.UserClient.Login(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp, err
+}
